@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment">
+ 
+	<select id="getCount" parameterType="int" resultType="int">
+		select count(*) from comments where ref=#{idx}
+	</select>
+ 
+ 	<insert id="insert" parameterType="CommentVO">
+ 		INSERT INTO comments(idx,mem_ref,b_ref,content)
+ 		values(comment_idx_seq.nextval,#{mem_ref},#{b_ref},#{content})
+ 	</insert>
+ 	
+ 	
+ 	<delete id="delete" parameterType="int">
+ 		delete from comments where idx=#{idx}
+ 	</delete>
+ 	
+ 	<select id="selectByIdx" parameterType="int" resultType="CommentVO">
+ 		select * from comments where idx=#{idx}
+ 	</select>
+
+ 	<select id="selectList" parameterType="int" resultType="TotalVO">
+ 		SELECT m.NAME, c.IDX,c.CONTENT,c.REGDATE FROM comments c,MEMBER	m 
+		WHERE m.IDX = c.MEM_REF AND c.b_REF =#{b_ref} order by regdate desc
+ 	</select>
+ 	
+ 	
+</mapper>
