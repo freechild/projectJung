@@ -9,21 +9,21 @@
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <meta http-equiv="Content-Style-Type" content="text/css">
 
+
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/resources/css/form.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/main.css" />
-<link rel="stylesheet" type="text/css" href="/resources/css/login.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/form.css" />
 <script src="/resources/js/front.js"></script>
 <script src="/resources/js/updateUser.js"></script>
 
-</head>
+</head> 
 <body>
-	<input type="text" value="${sessionScope.email }" id="scope">
+	<input type="text" value="${sessionScope.userId }" id="scope">
 	<input type="text" value="${sessionScope.m_idx }" id="scope_idx">
 
 	<div class="joinForm" id="stylized"></div>
 	<div id="overlay"></div>
-
+	<a href="javascript:showPopup('i')">111</a>
 	<div class="main-container">
 		<!-- HEADER -->
 		<header class="block">
@@ -75,10 +75,6 @@
 					</a></li>
 				</ul>
 			</div>
-
-
-
-
 
 
 			<!-- RIGHT-CONTAINER -->

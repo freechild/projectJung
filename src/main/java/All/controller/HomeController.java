@@ -49,5 +49,10 @@ public class HomeController {
 		
 		return "test/test5";
 	}
+	@RequestMapping(value = "test6", method = RequestMethod.GET)
+	public String test6(Model model) {
+		
+		return "test/test6";
+	}
 	
 }

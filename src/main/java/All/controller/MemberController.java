@@ -89,7 +89,6 @@ public class MemberController {
 	    String e_mail = memberVO.getEmail();
 	    String pw = service.getPw(e_mail);
 	    String id = memberVO.getUserId();
-	    
 	    String pass = aria.Decrypt(pw);
 	    
 	    System.out.println(id);
@@ -117,12 +116,11 @@ public class MemberController {
 	
 	// 회원정보 수정
 	@RequestMapping("{userId}/updateUser.do")
-	public String update(MemberVO memberVO, HttpServletRequest request){
+	public void update(MemberVO memberVO, HttpServletRequest request){
 		String pass = aria.Encrypt(memberVO.getUserPw());
 		memberVO.setUserPw(pass);
-		
+		System.out.println(memberVO.getUserPw());
 		service.update(memberVO);
-		return "login/login";
 	}
 	
 	//회원정보 수정

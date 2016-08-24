@@ -1,5 +1,3 @@
-
-
 function execDaumPostcode(){
     //load함수를 이용하여 core스크립트의 로딩이 완료된 후, 우편번호 서비스를 실행합니다.
     daum.postcode.load(function(){

@@ -18,7 +18,7 @@
 			<div class="form-header">
 				<h1>회원정보수정</h1>
 			</div>
-				<form action="/updateUser.do" method="post" onsubmit="return formCheck(this)" name = "rform" id="rform">
+				 <form action="/updateUser.do" method="post" onsubmit="return formCheck(this)" name = "rform" id="rform">
 					<div class="form-group">
 					
 						<input type="hidden" id="userIdCheck" value="false">
@@ -41,8 +41,7 @@
 								<c:out value="${passwordTest }"></c:out>
 							</span>
 						</label>
-						<input type="password" id="ruserPassword2" name="userPassword2"
-							required="required" />
+						<input type="password" id="ruserPassword2" name="userPassword2" required="required" />
 					</div>
 					<div class="form-content">
 						<div class="form-input" align="right">
@@ -57,8 +56,8 @@
 							<input type="text" id="postcode" name="zipcode" required="required" />
 						</div>
 					<div class="form-group">
-						<label for="address1">주소</label> <input type="text"
-							id="address1" name="address1" value="${memberVO.address1 }"  required="required" />
+						<label for="address1">주소</label>
+						<input type="text" id="address1" name="address1" value="${memberVO.address1 }"  required="required" />
 					</div>
 					<div class="form-group">
 						<input type="text" id="address2" name="address2" value="${memberVO.address2 }" required="required" />
