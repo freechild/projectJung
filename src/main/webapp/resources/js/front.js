@@ -1,9 +1,3 @@
-$(document).ready(function(){
-	$('#button').click(function(){
-		$(this).toggleClass('on');
-	});
-});
-
 //align
 jQuery.fn.center = function () {
     this.css("position","absolute");
@@ -24,8 +18,11 @@ function showPopup(obj){
 	$('.joinForm').center();
 	if(obj == 'f_btn')
 		loginForm("Welcome Passenger");
+	else if(obj =='updateP')
+		updateForm();
 	else 
 		$('.joinForm').html("<h1>Login</h1>");
+	
 }
 
 function loginForm(i){

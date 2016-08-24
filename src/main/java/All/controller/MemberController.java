@@ -116,16 +116,17 @@ public class MemberController {
 	}
 	
 	// 회원정보 수정
-	@RequestMapping("/updateUser.do")
+	@RequestMapping("{userId}/updateUser.do")
 	public String update(MemberVO memberVO, HttpServletRequest request){
 		String pass = aria.Encrypt(memberVO.getUserPw());
 		memberVO.setUserPw(pass);
+		
 		service.update(memberVO);
 		return "login/login";
 	}
 	
 	//회원정보 수정
-	@RequestMapping("/update.do")
+	@RequestMapping("{userId}/update.do")
 	public String updateUser(){
 		return "login/updateUser";
 	}
