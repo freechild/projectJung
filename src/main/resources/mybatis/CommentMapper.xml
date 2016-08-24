@@ -23,7 +23,7 @@
  	</select>
 
  	<select id="selectList" parameterType="int" resultType="TotalVO">
- 		SELECT m.NAME, c.IDX,c.CONTENT,c.REGDATE FROM comments c,MEMBER	m 
+ 		SELECT m.username, c.IDX,c.CONTENT,c.REGDATE FROM comments c,MEMBER	m 
 		WHERE m.IDX = c.MEM_REF AND c.b_REF =#{b_ref} order by regdate desc
  	</select>
  	
