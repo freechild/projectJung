@@ -1,25 +1,25 @@
 
-
-
 	function updateForm(){
 		var i = $('#scope').val();
-		$('.joinForm').css('height','400px');
+		$('.joinForm').css('height','550px');
 		$('.joinForm').html("<br><h1>회원정보수정</h1><br><br>");
-		$('.joinForm').append('<input type="hidden" id="userIdCheck" value="false">');
-		$('.joinForm').append('<input type="hidden" id="userIdCheck1" value="ture">');
-		$('.joinForm').append('<label for="userId">아이디 &nbsp&nbsp&nbsp</label>');
+		$('.joinForm').append('<div><label for="userId">아이디 &nbsp&nbsp&nbsp</label>');
 		$('.joinForm').append('<input type="text" id="userId1" name="userId" value="'+i+'" readonly="readonly" />')
 		$('.joinForm').append('<label for="password">비번 &nbsp&nbsp&nbsp</label> ');
 		$('.joinForm').append('<input type="password" id="ruserPassword" name="userPw" required="required" />');
-		$('.joinForm').append('<label for="userPassword2">비번확인	&nbsp&nbsp&nbsp');
-		$('.joinForm').append('<span id = "passwordTest">');
-		$('.joinForm').append('<c:out value="${passwordTest }"></c:out>');
-		$('.joinForm').append('</span>');
-		$('.joinForm').append('</label>');
-		$('.joinForm').append('<input type="password" id="ruserPassword2" name="userPassword2" required="required" />');
+		$('.joinForm').append('<label for="userPassword2">비번확인	&nbsp&nbsp&nbsp</label>');
+		$('.joinForm').append('<input type="password" id="ruserPassword2" name="userPassword2" required="required" /></div>');
+		
+		$('.joinForm').append('<button type ="button" onclick="execDaumPostcode()">우편번호검색</button><br><br>');
+		$('.joinForm').append('<label>우편번호</label><input type="text" id="postcode" name="zipcode" />');
+		$('.joinForm').append('<label>주소 &nbsp&nbsp&nbsp</label>');
+		$('.joinForm').append('<input type="text" id="address1" name="address1" />');
+		$('.joinForm').append('<label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp </label><input type="text" id="address2" name="address2" />');
 		$('.joinForm').append('<button type="button" id="btn" onclick="update()">회원정보수정</button>');
 	}	
-
+	
+	
+	
 	function update(){
 		var pw1 = $('#ruserPassword').val();
 		var pw2 = $('#ruserPassword2').val();
@@ -33,7 +33,10 @@
 		$.ajax({
 			url : 'updateUser.do',
 			data :{
-				"userPw" : $('#ruserPassword').val(), 
+				"userPw" : $('#ruserPassword').val(),
+				"zipcode" : $('#postcode').val(),
+				"address1" : $('#address1').val(),
+				"address2" : $('#address2').val(),
 			}
 		}).done(function(){
 			pop_hide();

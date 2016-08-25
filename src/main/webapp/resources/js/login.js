@@ -102,9 +102,8 @@ $(document).ready(function() {
 			});
 })
 	
-	function test(){	
+	function loginDo(){	
 		 $.ajax({
-			
 			url : 'login.do',
 			data :{
 				"userId" : $('#userId').val(),
@@ -114,8 +113,11 @@ $(document).ready(function() {
 			if(data=="true"){
 				var url = $('#userId').val();
 				$(location).attr('href',url+"/main");
-			}
-			else
+			}else if(data=="e"){
+				var url = $('#userId').val();
+				$(location).attr('href',url+"/main");
+				alert('현재 접속중입니다. 강제 접속 종료후 접속합니다');
+			}else
 				alert(data);
 		}) 
 	}
@@ -130,7 +132,6 @@ $(document).ready(function() {
 			document.rform.ruserPassword.focus();
 			return false;
 		}
-
 		if(userIdCheck == 'false'){
 			alert("아이디 중복입니다.");
 			document.rform.userId1.focus();

@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +30,7 @@ import member.email.Email;
 import member.email.EmailSender;
 import member.service.Aria;
 import member.service.MemberService;
+import member.service.MultiLoginPreventorListener;
 
 /**
  * Handles requests for the application home page.
@@ -45,17 +47,26 @@ public class MemberController {
 	@Autowired
 	private Email email;
 	
+	
 	@Autowired
 	private MemberService service;
 	
+	MultiLoginPreventorListener preventorListener = MultiLoginPreventorListener.getInstance();
+	
+
 	// 로그인
 	@RequestMapping(value = "login.do")
 	@ResponseBody
-	public String login(HttpSession session, MemberVO memberVO, HttpServletRequest request){
-		
+	public String login(Model model, HttpSession session, MemberVO memberVO, HttpServletRequest request){
 		String result = service.loginId(memberVO.getUserId(), memberVO.getUserPw());
+
 		if(result == "true")
 			session.setAttribute("userId",memberVO.getUserId());
+		if(preventorListener.findByLoginId(memberVO.getUserId())){
+			preventorListener.invalidateByLoginId(memberVO.getUserId());
+			result = "e";
+		}
+		
 		return result; 
 	} 
 	// 로그아웃
@@ -119,7 +130,8 @@ public class MemberController {
 	public void update(MemberVO memberVO, HttpServletRequest request){
 		String pass = aria.Encrypt(memberVO.getUserPw());
 		memberVO.setUserPw(pass);
-		System.out.println(memberVO.getUserPw());
+		
+		System.out.println(memberVO);
 		service.update(memberVO);
 	}
 	

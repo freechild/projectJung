@@ -54,7 +54,7 @@ public class MemberService {
 	
 	
 	public String loginId(String userId,String userPw){
-		String result =null;
+		String result ="true";
 		
 		try {
 			MemberVO vo = dao.selectById(userId);

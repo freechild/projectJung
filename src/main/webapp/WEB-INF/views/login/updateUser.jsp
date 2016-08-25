@@ -11,7 +11,7 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 <script src="/resources/js/updateUser.js"></script>
 
-</head>
+</head><div></div>
 <body>
 	<div class="form">
 		<div class="form-panel one">
@@ -55,7 +55,7 @@
 							
 							<input type="text" id="postcode" name="zipcode" required="required" />
 						</div>
-					<div class="form-group">
+					<div class="form-group" >
 						<label for="address1">주소</label>
 						<input type="text" id="address1" name="address1" value="${memberVO.address1 }"  required="required" />
 					</div>

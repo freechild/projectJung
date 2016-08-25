@@ -11,16 +11,18 @@
 
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 <link rel="stylesheet" type="text/css" href="/resources/css/main.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/form.css" />
 <script src="/resources/js/front.js"></script>
 <script src="/resources/js/updateUser.js"></script>
+<script src="/resources/js/update.js"></script>
 
 </head> 
 <body>
 	<input type="text" value="${sessionScope.userId }" id="scope">
 	<input type="text" value="${sessionScope.m_idx }" id="scope_idx">
-
+	<input type="text" value="${usersMap}" id="userAdd">
 	<div class="joinForm" id="stylized"></div>
 	<div id="overlay"></div>
 	<a href="javascript:showPopup('i')">111</a>
@@ -44,7 +46,7 @@
 					<a href="#">Me</a>
 					<div> 
 						<ul>
-							<li><a href="#">Logout</a></li>
+							<li><a href="/logout.do">Logout</a></li>
 							<li><a href="javascript:showPopup('updateP')" id="updateP">update</a></li>
 							<li><a href="#">friends</a></li>
 						</ul>
