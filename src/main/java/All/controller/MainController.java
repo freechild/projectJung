@@ -24,6 +24,7 @@ public class MainController {
 	@Autowired
 	private MemberService memberService;
 	
+	@Autowired
 	MultiLoginPreventorListener preventorListener = MultiLoginPreventorListener.getInstance();
 	
 	@RequestMapping(value = {"/","front"}, method = RequestMethod.GET)
@@ -33,17 +34,16 @@ public class MainController {
 	}
 	
 	//메인
-	@RequestMapping(value="{userId}/main", produces={"text/html"})
+	@RequestMapping(value={"{userId}/main"}, produces={"text/html"})
 	public String method7(@PathVariable("userId") String userId, Model model, HttpSession session, MemberVO memberVO){
 		
-		if(session.getAttribute("userId")==null)
-			return "/login/login";
-		
 		int m_idx = memberService.selectByIdx(userId);
-		
 		session.setAttribute("m_idx",m_idx );
-
-		preventorListener.addUser(memberVO.getUserId(), session);
+		
+		if(!preventorListener.findByLoginId(memberVO.getUserId())){
+			return "redirect:/";
+		}
+		
 		model.addAttribute("usersMap", preventorListener.getTotalActiveSession());
 		return "main";
 	}

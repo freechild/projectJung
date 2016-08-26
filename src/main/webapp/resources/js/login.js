@@ -69,12 +69,12 @@ $(document).ready(function() {
 											},
 											success:function(data){
 												if(data!="true"){
-													$("#idTest").text("아이디 중복이염");
+													$("#idTest").text("아이디 중복입니다");
 													$("#userIdCheck").val("false");
 													
 												}
 												else{
-													$("#idTest").text("사용 가능여");
+													$("#idTest").text("사용 가능 합니다");
 													$("#userIdCheck").val("true");
 												}
 											}

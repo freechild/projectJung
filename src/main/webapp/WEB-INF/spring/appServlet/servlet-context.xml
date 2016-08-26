@@ -27,6 +27,8 @@
 	<context:component-scan base-package="member.dao" />
 	<context:component-scan base-package="member.service" />
 	
+	
+	<beans:bean id="preventorListener" class="member.service.MultiLoginPreventorListener"></beans:bean>
 
 	<!-- email -->
 		<beans:bean id="mailSender" class ="org.springframework.mail.javamail.JavaMailSenderImpl" >

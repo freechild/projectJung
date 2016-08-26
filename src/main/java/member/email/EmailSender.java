@@ -9,6 +9,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 
 public class EmailSender {
+	
     @Autowired
     protected JavaMailSender mailSender;
     public void SendEmail(Email email) throws Exception {

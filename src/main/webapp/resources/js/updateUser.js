@@ -1,10 +1,13 @@
 
 	function updateForm(){
-		var i = $('#scope').val();
-		$('.joinForm').css('height','550px');
-		$('.joinForm').html("<br><h1>회원정보수정</h1><br><br>");
+		var id = $('#scope').val();
+		
+		$('.joinForm').css('height','500px');
+		$('.joinForm').html("<h1>회원정보수정</h1>");					
+		$('.joinForm').append("<span id='img_tag'><a href='javascript:pop_hide()'><img src='/resources/Image/ic_clear.png'></a></span>");
+		$('.joinForm').append("<hr><br><br>")
 		$('.joinForm').append('<div><label for="userId">아이디 &nbsp&nbsp&nbsp</label>');
-		$('.joinForm').append('<input type="text" id="userId1" name="userId" value="'+i+'" readonly="readonly" />')
+		$('.joinForm').append('<input type="text" id="userId1" name="userId" value="'+id+'" readonly="readonly" />')
 		$('.joinForm').append('<label for="password">비번 &nbsp&nbsp&nbsp</label> ');
 		$('.joinForm').append('<input type="password" id="ruserPassword" name="userPw" required="required" />');
 		$('.joinForm').append('<label for="userPassword2">비번확인	&nbsp&nbsp&nbsp</label>');

@@ -59,6 +59,7 @@ public class MultiLoginPreventorListener implements HttpSessionBindingListener {
 	public void removeUser(String userid){
 		if(findByLoginId(userid)) usersMap.remove(userid);
 	}
+	
 	@Override
 	public void valueBound(HttpSessionBindingEvent event) {
 		if(findByLoginId(event.getName())){

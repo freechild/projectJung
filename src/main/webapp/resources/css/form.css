@@ -96,6 +96,14 @@ font-family:tahoma;
 	float: right;
 }
 
-
+#divView {
+	position:absolute;
+	display:none;
+	background-color:#ffffff;
+	border:solid 2px #d0d0d0;
+	width:100px;
+	height:100px;
+	padding:10px;
+}
 
 </style>

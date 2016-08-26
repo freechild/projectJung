@@ -51,6 +51,7 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	
+	@Autowired
 	MultiLoginPreventorListener preventorListener = MultiLoginPreventorListener.getInstance();
 	
 
@@ -60,13 +61,12 @@ public class MemberController {
 	public String login(Model model, HttpSession session, MemberVO memberVO, HttpServletRequest request){
 		String result = service.loginId(memberVO.getUserId(), memberVO.getUserPw());
 
-		if(result == "true")
-			session.setAttribute("userId",memberVO.getUserId());
-		if(preventorListener.findByLoginId(memberVO.getUserId())){
-			preventorListener.invalidateByLoginId(memberVO.getUserId());
-			result = "e";
+		if(result == "true"){
+			if(preventorListener.findByLoginId(memberVO.getUserId())){
+				result = "e";
+			}
+			preventorListener.addUser(memberVO.getUserId(), session);
 		}
-		
 		return result; 
 	} 
 	// 로그아웃
@@ -155,4 +155,8 @@ public class MemberController {
 			flag = "true";
 		return flag;
 	}
+	
+	// 친구목록
+	
+	
 }
