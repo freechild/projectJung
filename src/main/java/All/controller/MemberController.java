@@ -1,35 +1,39 @@
 package All.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
+
+import java.util.HashMap;
+import java.util.List;
+
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
+
+import com.google.gson.Gson;
 
 import All.vo.MemberVO;
+import All.vo.MessageVO;
 import member.email.Email;
 import member.email.EmailSender;
 import member.service.Aria;
 import member.service.MemberService;
+import member.service.MessageService;
 import member.service.MultiLoginPreventorListener;
 
 /**
@@ -49,7 +53,10 @@ public class MemberController {
 	
 	
 	@Autowired
-	private MemberService service;
+	private MemberService memberService;
+	
+	@Autowired
+	private MessageService messageService;
 	
 	@Autowired
 	MultiLoginPreventorListener preventorListener = MultiLoginPreventorListener.getInstance();
@@ -59,7 +66,7 @@ public class MemberController {
 	@RequestMapping(value = "login.do")
 	@ResponseBody
 	public String login(Model model, HttpSession session, MemberVO memberVO, HttpServletRequest request){
-		String result = service.loginId(memberVO.getUserId(), memberVO.getUserPw());
+		String result = memberService.loginId(memberVO.getUserId(), memberVO.getUserPw());
 
 		if(result == "true"){
 			if(preventorListener.findByLoginId(memberVO.getUserId())){
@@ -84,7 +91,7 @@ public class MemberController {
 	public String register(MemberVO memberVO, HttpServletRequest request){
 		String pass = aria.Encrypt(memberVO.getUserPw());
 		memberVO.setUserPw(pass);
-		service.insert(memberVO);
+		memberService.insert(memberVO);
 		return "login/login";
 	}
 	
@@ -94,7 +101,7 @@ public class MemberController {
 	    ModelAndView mav;
 	    
 	    String e_mail = memberVO.getEmail();
-	    String pw = service.getPw(e_mail);
+	    String pw = memberService.getPw(e_mail);
 	    String id = memberVO.getUserId();
 	    String pass = aria.Decrypt(pw);
 	    
@@ -128,7 +135,7 @@ public class MemberController {
 		memberVO.setUserPw(pass);
 		
 		System.out.println(memberVO);
-		service.update(memberVO);
+		memberService.update(memberVO);
 	}
 	
 	//회원정보 수정
@@ -143,7 +150,7 @@ public class MemberController {
 	@ResponseBody
 	public String idCheck(@RequestParam("userId1") String userId){
 		System.out.println("get in"+userId);
-		int result = service.idCheck(userId);
+		int result = memberService.idCheck(userId);
 		String flag = null;
 		if(result==1){
 			flag = "false";
@@ -152,4 +159,35 @@ public class MemberController {
 		return flag;
 	}
 
+	@RequestMapping(value = "searchFriend",produces ="text/html; charset=UTF-8")
+	@ResponseBody
+	public Object searchFried(@RequestParam("search")String search,@RequestParam("idx")int idx){
+		String data =null;
+		
+		List<MemberVO> list = memberService.friendList(search,idx);
+//		System.out.println(list);
+		if(list.isEmpty())
+			data = "false"; 
+		else{
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("friendList", list);
+			Gson gson = new Gson();
+			data = gson.toJson(map);
+		}
+		System.out.println(data);
+		return data;
+	}
+	@RequestMapping(value="addFriend",produces ="text/html; charset=UTF-8")
+	@ResponseBody
+	public String addFriend(@ModelAttribute MessageVO vo){
+		String result =null;
+
+		boolean bool = messageService.insert(vo);
+		if(bool==true) 
+			result ="메시지를 보냈습니다.";
+		else
+			result ="이미 등록된 친구입니다.";
+		return result;
+	}
+	
 }

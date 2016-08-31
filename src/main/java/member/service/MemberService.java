@@ -1,8 +1,11 @@
 package member.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import All.vo.MemberVO;
+import All.vo.TotalVO;
 import member.dao.MemberDao;
 
 @Service
@@ -74,5 +77,37 @@ public class MemberService {
 		}
 		return result;
 	}
+	
+	//add	
+	
+	public List<MemberVO> friendList(String search,int idx){
+		List<MemberVO> list = null;
+		try {
+			System.out.println(search);
+			list = dao.searchFriend(search,idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+
+	
+	public void add_friend(int idx,int friendList){
+		try {
+			TotalVO vo = dao.selectByIdx(idx);
+			System.out.println("add : "+vo);
+			if(vo.getFriendList()==null){
+				dao.add_friend(idx, friendList+"");
+			}
+			else if(vo.getFriendList()!=null){
+				String add = vo.getFriendList() +"/"+friendList;
+				dao.add_friend(idx, add);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 }

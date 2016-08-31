@@ -25,6 +25,14 @@
 
 	<dependencies>
 
+		<!-- gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.7</version>
+		</dependency>
+
+
 		<!-- jasypt 암호화 -->
 		<dependency>
 			<groupId>org.jasypt</groupId>
@@ -176,7 +184,7 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-    
+
 
 		<!-- Test -->
 		<dependency>

@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ include file="include.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="include.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,15 +13,20 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 <link rel="stylesheet" type="text/css" href="/resources/css/main.css" />
 <link rel="stylesheet" type="text/css" href="/resources/css/form.css" />
-<script src="/resources/js/front.js"></script>
-<script src="/resources/js/updateUser.js"></script>
-<script src="/resources/js/update.js"></script>
+<script src="/resources/js/form.js"></script>
+<script src="/resources/js/part_main/updateUser.js"></script>
+<script src="/resources/js/part_main/update.js"></script>
 </head> 
 <body>
 	<input type="text" value="${sessionScope.userId }" id="scope">
 	<input type="text" value="${sessionScope.m_idx }" id="scope_idx">
-	<div class="joinForm" id="stylized"></div>
+	<input type="hidden" value="${date.year}" id="year">
+	<input type="hidden" value="${date.month }" id="month">
+	<input type="hidden" value="${date.firstDay }" id="firstDay">
+	<input type="hidden" value="${date.lastDay }" id="lastDay">
+	<div class="joinForm" id="stylized"></div>	
 	<div id="overlay"></div>
+		
 	<div class="main-container">
 		<!-- HEADER -->
 		<header class="block">
@@ -53,17 +57,16 @@
 				</div>
 			</div>
 		</header>
-
 		<!-- 왼쪽 메뉴박스-->
 		<div class="left-container container">
 			<div class="menu-box block">
 				<!-- MENU BOX (LEFT-CONTAINER) -->
 				<h2 class="titular">MENU BOX</h2>
 				<ul class="menu-box-menu">
-					<li><a class="menu-box-tab" href="#6"> <span
-							class="icon fontawesome-envelope scnd-font-color"></span>Messages
+					<li><a class="menu-box-tab" href="message">
+					<span class="icon fontawesome-envelope scnd-font-color"></span>Messages
 							<div class="menu-box-number">24</div></a></li>
-					<li><a class="menu-box-tab" href="#8"><span
+					<li><a class="menu-box-tab" href="invites"><span
 							class="icon entypo-paper-plane scnd-font-color"></span>Invites
 							<div class="menu-box-number">3</div></a></li>
 					<li><a class="menu-box-tab" href="#10"><span
@@ -71,29 +74,17 @@
 							<div class="menu-box-number">5</div></a></li>
 					<li><a class="menu-box-tab" href="#12"><span
 							class="icon entypo-cog scnd-font-color"></span>Account Settings</a></li>
-					<li><a class="menu-box-tab" href="#13"> <sapn
-								class="icon entypo-chart-line scnd-font-color"></sapn>Statistics
-					</a></li>
+					<li><a class="menu-box-tab" href="#13">
+					<sapn class="icon entypo-chart-line scnd-font-color"></sapn>Statistics</a>
+					</li>
 				</ul>
 			</div>
-
-
 			<!-- RIGHT-CONTAINER -->
 			<div class="right-container container">
 				<!-- 전체 움직이는 로그인부분 테이블 감싸야함 -->
-
-
-
-
 				<div class="calendar-month block">
-					<!-- CALENDAR MONTH (RIGHT-CONTAINER) -->
-					<div class="arrow-btn-container">
-						<a class="arrow-btn left" href="#202"><span
-							class="icon fontawesome-angle-left"></span></a>
-						<h2 class="titular">APRIL 2013</h2>
-						<a class="arrow-btn right" href="#203"><span
-							class="icon fontawesome-angle-right"></span></a>
-					</div>
+
+					<div class="arrow-btn-container"></div>
 					<!-- 갤린더 수정부분 -->
 					<table class="calendar">
 						<thead class="days-week">
@@ -106,63 +97,8 @@
 								<th>F</th>
 								<th>S</th>
 							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td><a class="scnd-font-color" href="#100">1</a></td>
-							</tr>
-							<tr>
-								<td><a class="scnd-font-color" href="#101">2</a></td>
-								<td><a class="scnd-font-color" href="#102">3</a></td>
-								<td><a class="scnd-font-color" href="#103">4</a></td>
-								<td><a class="scnd-font-color" href="#104">5</a></td>
-								<td><a class="scnd-font-color" href="#105">6</a></td>
-								<td><a class="scnd-font-color" href="#106">7</a></td>
-								<td><a class="scnd-font-color" href="#107">8</a></td>
-							</tr>
-							<tr>
-								<td><a class="scnd-font-color" href="#108">9</a></td>
-								<td><a class="scnd-font-color" href="#109">10</a></td>
-								<td><a class="scnd-font-color" href="#110">11</a></td>
-								<td><a class="scnd-font-color" href="#111">12</a></td>
-								<td><a class="scnd-font-color" href="#112">13</a></td>
-								<td><a class="scnd-font-color" href="#113">14</a></td>
-								<td><a class="scnd-font-color" href="#114">15</a></td>
-							</tr>
-							<tr>
-								<td><a class="scnd-font-color" href="#115">16</a></td>
-								<td><a class="scnd-font-color" href="#116">17</a></td>
-								<td><a class="scnd-font-color" href="#117">18</a></td>
-								<td><a class="scnd-font-color" href="#118">19</a></td>
-								<td><a class="scnd-font-color" href="#119">20</a></td>
-								<td><a class="scnd-font-color" href="#120">21</a></td>
-								<td><a class="scnd-font-color" href="#121">22</a></td>
-							</tr>
-							<tr>
-								<td><a class="scnd-font-color" href="#122">23</a></td>
-								<td><a class="scnd-font-color" href="#123">24</a></td>
-								<td><a class="scnd-font-color" href="#124">25</a></td>
-								<td><a class="today" href="#125">26</a></td>
-								<td><a href="#126">27</a></td>
-								<td><a href="#127">28</a></td>
-								<td><a href="#128">29</a></td>
-							</tr>
-							<tr>
-								<td><a href="#129">30</a></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-						</tbody>
+						</thead>		
+						<tbody class="calendar_N"></tbody>
 					</table>
 				</div>
 				<!-- end calendar-month block -->
@@ -170,5 +106,8 @@
 			<!-- end right-container -->
 		</div>
 		<!-- end main-container -->
+
+			
+		
 </body>
 </html>

@@ -9,7 +9,7 @@ import All.vo.PagingList;
 import All.vo.TotalVO;
 import board.dao.BoardDAO;
 import board.dao.CategoryDAO;
-import board.dao.CommentDAO;
+
 
 @Service
 @Transactional
@@ -19,8 +19,8 @@ public class BoardService {
 	private BoardDAO boardDao;
 	@Autowired
 	private CategoryDAO categoryDao;
-	@Autowired
-	private CommentDAO commentDAO;
+	
+	
 	
 	
 
@@ -145,10 +145,11 @@ public class BoardService {
 			boardDao.update(vo);
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			result=1;
 		}
 		
-//		System.out.println(result);
+		System.out.println(result);
 	}
 }
 

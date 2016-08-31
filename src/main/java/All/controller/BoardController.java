@@ -4,10 +4,10 @@ import java.util.List;
 
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,20 +16,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.SessionScope;
+
+
+import com.google.gson.Gson;
 
 import All.vo.BoardVO;
 import All.vo.CategoryVO;
-import All.vo.CommentVO;
+
 import All.vo.PagingList;
 import All.vo.TotalVO;
 import board.service.BoardService;
 import board.service.CategoryService;
 import board.service.CommentService;
 import board.service.PagingProcess;
-import board.service.PasswordCheckLogic;
-import member.service.MemberService;
-import member.service.MultiLoginPreventorListener;
+import board.service.ClientCheckLogic;
+
 
 
 @Controller
@@ -43,12 +44,7 @@ public class BoardController {
 		@Autowired	
 		private CommentService commentService;
 		@Autowired
-		private PasswordCheckLogic passwordCheckLogic;
-		@Autowired
-		MultiLoginPreventorListener preventorListener = MultiLoginPreventorListener.getInstance();
-		
-		
-		
+		private ClientCheckLogic clientCheckLogic;
 		
 		public BoardService getBoardService() {
 			return boardService;
@@ -81,6 +77,7 @@ public class BoardController {
 		@RequestMapping(value = "{email}/board", method = RequestMethod.GET)
 		public String board(@PathVariable("email") String email,Model model,HttpServletRequest request) {
 			
+			
 			HashMap<String, Integer> map =pagingProcess.pagingProcess(request);
 			
 			
@@ -97,7 +94,6 @@ public class BoardController {
 			model.addAttribute("s", pageSize);
 			model.addAttribute("b", blockSize);
 			model.addAttribute("cid", categoryid);
-			model.addAttribute("usersMap", preventorListener.getTotalActiveSession());
 			
 			PagingList<TotalVO> board =
 			boardService.selectList(currentPage, pageSize, blockSize, categoryid);
@@ -105,11 +101,11 @@ public class BoardController {
 			categoryService.getCategories();
 			
 			
-			System.out.println(board);
+			//System.out.println(board);
 			
 			model.addAttribute("board", board);
 			model.addAttribute("categories", categories);
-			return "board";
+			return "board/board";
 		
 	}
 	
@@ -137,7 +133,7 @@ public class BoardController {
 			
 			model.addAttribute("categories", categories);
 						
-			return "b_write";
+			return "board/b_write";
 		}
 	
 		@RequestMapping(value = "{email}/b_writeOk")
@@ -182,58 +178,34 @@ public class BoardController {
 			
 			List<TotalVO> Clist = commentService.selectList(idx);
 			model.addAttribute("clist", Clist);
-			System.out.println(Clist);
-			return "b_view";
+//			System.out.println(Clist);
+			return "board/b_view";
 		}
-	
-	
-	
-		@RequestMapping(value = "{email}/b_checkPW")
+		
+		@RequestMapping(value ="{email}/b_modi",produces ="text/html; charset=UTF-8")
 		@ResponseBody
-		public String b_checkPW(@PathVariable("email") String email,Model model,@RequestParam("idx") int idx,@RequestParam("pw")String pw,@RequestParam("whichBtn")String whichBtn){
-					
-//			System.out.println(idx);
-//			System.out.println(pw);
-//			System.out.println(whichButton);
+		public String b_modi(@PathVariable("email") String email,Model model,@RequestParam("idx")int idx,@RequestParam("mem_ref")int mem_ref){
+	
+			String flag = clientCheckLogic.editCheck(idx, mem_ref);
 			
-			String bool = 
-			passwordCheckLogic.passwordCheck(idx, pw);
-			
-			if(bool=="true"){
-				System.out.println("get in the source");
-				if(whichBtn.equals("b_del")){
-					System.out.println("pw is right! delete this");	
-					boardService.delete(idx);
-					bool = "board";
-				}
-				if(whichBtn.equals("b_modi")){
-					System.out.println("pw is right! modity this");	
-					bool = "b_modi?modi=1&idx="+idx;
-				}
+			if(flag == "true"){
+				TotalVO vo = boardService.selectByIdx(idx);
+				System.out.println(vo);
+				flag = "{test':'"+ vo.getContent() +"'}";
+				Gson gson = new Gson();
+				HashMap<String, String> map = new HashMap<String, String>();
+				map.put("title", vo.getTitle());
+				map.put("content", vo.getContent());
+				flag = gson.toJson(map);
 				
 			}
 			
-			return bool;
-		}
-		
-		
-		@RequestMapping(value ="{email}/b_modi")
-		public String b_modi(@PathVariable("email") String email,Model model,@RequestParam int idx,@RequestParam int modi,HttpServletRequest request){
-			
-			BoardVO vo =boardService.selectByIdx(idx);
-			//System.out.println(vo);
-			//System.out.println(modi);
-			
-			b_write(request, model);
-			
-			model.addAttribute("vo",vo);
-			model.addAttribute("modi", modi);
-			
-			return "b_write";
+			return flag;
 		}
 		
 		@RequestMapping(value ="{email}/b_modiView")
-		public String b_modiView(@PathVariable("email") String email,Model model,@RequestParam int idx,@RequestParam int modi,
+		@ResponseBody
+		public void b_modiView(@PathVariable("email") String email,
 				@ModelAttribute BoardVO vo,HttpServletRequest request){
 			
 			vo.setIp(request.getRemoteAddr());
@@ -241,11 +213,21 @@ public class BoardController {
 				vo.setSavefile(" ");
 				vo.setOrigfile(" ");
 			}
-			//System.out.println(vo);
-			boardService.update(vo);
-			b_view(model, idx, request);
-					
-			return "b_view";
+			
+			System.out.println(vo);
+			boardService.update(vo);			
+		}
+		@RequestMapping(value ="{email}/b_del")
+		@ResponseBody
+		public String b_delete(@PathVariable("email") String email,
+				@RequestParam("idx")int idx,@RequestParam("mem_ref")int mem_ref){
+			String flag = clientCheckLogic.editCheck(idx, mem_ref);
+			return flag;
+		}
+		@RequestMapping(value ="{email}/b_delOk")
+		@ResponseBody
+		public void b_deleteOk(@PathVariable("email") String email,@RequestParam("idx")int idx){
+			boardService.delete(idx);
 		}
 		
 		
@@ -279,7 +261,7 @@ public class BoardController {
 				searchContent = request.getParameter("searchContent");
 			}catch(Exception e){}
 			
-			PagingList<BoardVO> board =
+			PagingList<TotalVO> board =
 			boardService.selectSearch(currentPage, pageSize, blockSize, categoryid, search, searchContent);
 			List<CategoryVO>categories =
 					categoryService.getCategories();
@@ -289,7 +271,7 @@ public class BoardController {
 			
 			
 			
-			return "board";
+			return "board/board";
 		}
 		
 		@RequestMapping(value ="{email}/b_category")
@@ -312,7 +294,7 @@ public class BoardController {
 			model.addAttribute("b", blockSize);
 			model.addAttribute("cid", categoryid);
 			
-			PagingList<BoardVO> board =
+			PagingList<TotalVO> board =
 			boardService.selectList(currentPage, pageSize, blockSize, categoryid);
 			
 			model.addAttribute("board",board);
@@ -323,7 +305,7 @@ public class BoardController {
 			model.addAttribute("categories", categories);
 			
 			
-			return "board";
+			return "board/board";
 		}
 		
 		

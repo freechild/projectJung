@@ -1,13 +1,15 @@
 package event.service;
-
 import java.util.Calendar;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class EventProess {
 	
-	public HashMap<String, Integer> eventProress(HttpServletRequest request){
+	public HashMap<String, String> eventProress(HttpServletRequest request){
 				
 		int year; 
 		int month; 
@@ -21,24 +23,55 @@ public class EventProess {
 		}
 		try {
 			month = Integer.parseInt(request.getParameter("month"));
+			if(month>12){
+				year +=1;
+				month =1;
+			}
+			else if(month<1){
+				year -=1;
+				month =12;
+			}
+				
 		} catch (Exception e) {
 			month = cal.get(Calendar.MONTH)+1;
 		}
+		int days = cal.get(Calendar.DATE);
+		int mon = cal.get(Calendar.MONTH)+1;
+		String today =null;
+		String day;
+		String Mon;
+		if(days<10)
+			 day = "0"+days;
+		else
+			day = days+"";
+			
+		if(mon<10)
+			Mon = "0"+mon;
+		else
+			Mon = mon+"";
 		
-		year= cal.get(Calendar.YEAR);
-		month= cal.get(Calendar.YEAR); //클라이언트에서 넘겨준 값이 없을때 표시하는 값
+			
+			today = cal.get(Calendar.YEAR) + 
+					"/"+ Mon +
+					"/"+day;			
+		
+		
 		
 		cal.set(year, month-1, 1);
-	    year = cal.get(Calendar.YEAR);
-	    month = cal.get(Calendar.MONTH)+1;
+		int firstDay = cal.get(Calendar.DAY_OF_WEEK);
+	    int lastDay = cal.getActualMaximum(Calendar.DATE);
+	    
+		HashMap<String, String> map = new HashMap<String, String>();
 		
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		
-		map.put("year", year);
-		map.put("month", month);
-		
+		map.put("year", year+"");
+		if(month <10){
+			map.put("month", "0"+month);			
+		}
+		else map.put("month", month+"");
+		map.put("today", today);
+		map.put("firstDay", firstDay+"");
+		map.put("lastDay", lastDay+"");
 		return map;
 	}
-     
 	
 }

@@ -26,6 +26,7 @@
 	<context:component-scan base-package="board.service" />
 	<context:component-scan base-package="member.dao" />
 	<context:component-scan base-package="member.service" />
+	<context:component-scan base-package="event.service" />
 	
 	
 	<beans:bean id="preventorListener" class="member.service.MultiLoginPreventorListener"></beans:bean>

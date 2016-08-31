@@ -1,20 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="index.jsp" %>
-
+<%@ include file="../index.jsp" %>
+<%@ include file="../include.jsp" %>
 
 <article>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script src="/resources/js/b_view.js" ></script>
-<script src="/resources/js/front.js" ></script>
-<script type="text/javascript">
+<script src="/resources/js/part_main/mainIn.js"></script>
+<script src="/resources/js/form.js" ></script>
+<script src="/resources/js/part_board/b_view.js" ></script>
 
-</script>
-<!-- 암호처리 팝업창 -->
-<div align="center" class="_popup"  id="b_popup" style="width:200px;
-			height:60px; border:2px solid #777;display:none;background-color: white">	 	 
-</div>	
-	<input type="hidden" value="${vo.idx }" id="idx">
+	 	 
 	
+	<input type="hidden" value="${vo.idx }" id="idx">
 	name : <c:out value="${vo.name }" /> ,
 	ip : <c:out value="${vo.ip }" /> , 
 	likes : <c:out value="${vo.likes }" /><br>
@@ -34,7 +30,6 @@
 	</div>
 	
 	
-	
 	<hr>
 	<br>
 	<div class="comment_V">
@@ -43,10 +38,10 @@
 		</c:if>
 		<c:if test="${!empty clist }">
 			<c:forEach var="c" items="${clist }" varStatus="s">
-				글쓴이 :<c:out value="${c.name }" /> /
+				글쓴이 :<c:out value="${c.name }" /> 
 				등록일: <fmt:formatDate value="${c.regdate }"/> 
 				
-				<input type="button" value="Delete"  id="${c.idx }" onclick="view_popup('${c.idx}')">
+				<input type="button" value="Delete"  id="${c.idx }" onclick="showPopup('${c.idx}')">
 				<br>
 				댓글 :<c:set var ="content" value="${c.content } "/>
 				<c:set var="content" value="${fn:replace(content,'<','&lt;') }"/>

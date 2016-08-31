@@ -18,6 +18,7 @@ public class MemberVO {
 	private Date regdate;
 	private int status;
 	private String hint;
+	private String friendList;
 	
 	public int getIdx() {
 		return idx;
@@ -85,12 +86,19 @@ public class MemberVO {
 	public void setHint(String hint) {
 		this.hint = hint;
 	}
+	public String getFriendList() {
+		return friendList;
+	}
+	public void setFriendList(String friendList) {
+		this.friendList = friendList;
+	}
 	@Override
 	public String toString() {
 		return "MemberVO [idx=" + idx + ", userId=" + userId + ", userName=" + userName + ", userPw=" + userPw
 				+ ", email=" + email + ", zipcode=" + zipcode + ", address1=" + address1 + ", address2=" + address2
-				+ ", regdate=" + regdate + ", status=" + status + ", hint=" + hint + "]";
+				+ ", regdate=" + regdate + ", status=" + status + ", hint=" + hint + ", friendList=" + friendList + "]";
 	}
+	
 	
 	
 }

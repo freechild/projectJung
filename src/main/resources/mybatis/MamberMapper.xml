@@ -8,14 +8,12 @@
 	</select> 
 	
 	<insert id="insert" parameterType="MemberVO">
-		<![CDATA[
 			insert into
 			member
 			(idx, userId, userPw, userName, email, zipcode, address1, address2, hint)
 			values
 			(member_idx_seq.nextval,#{userId},#{userPw},#{userName}, 
-			 #{email},#{zipcode},#{address1},#{address2},#{hint})	
-		]]>
+			 #{email},#{zipcode},#{address1},#{address2},#{hint})		
 	</insert>
 	
 	<select id="getPw" parameterType="String" resultType="java.lang.String">
@@ -27,7 +25,6 @@
 	</select>
 	
 	<update id="update" parameterType="MemberVO">
-		<![CDATA[
 			update
 				member
 			set
@@ -37,7 +34,25 @@
 				address2=#{address2}
 			where
 				userId=#{userId}
-		]]>
 	</update>
+	
+	<!-- add -->
+	
+	<update id="commitStatus" parameterType="String">
+		update member set status = 1 where userId = #{userId}
+	</update>
+	
+	<select id="searchFriend" parameterType="String" resultType="MemberVO">
+		select * from member  
+		<where>
+			( userName Like #{search}||'%'
+			OR email Like #{search}||'%'
+			)  		
+		</where>
+	</select>
+	
+	<select id="selectByIdx" parameterType="int" resultType="TotalVO">
+		select member.userName name,member.* from member where idx =#{idx}
+	</select>
 	
 </mapper>

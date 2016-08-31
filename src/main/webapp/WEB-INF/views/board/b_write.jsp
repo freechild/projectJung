@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
-<%@ include file="include.jsp"%>
-<jsp:include page="index.jsp" />
+<%@ include file="../include.jsp"%>
+<jsp:include page="../index.jsp" />
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script src="/resources/js/mainIn.js"></script>
-<script src="/resources/js/b_write.js"></script>
+<script src="/resources/js/form.js"></script>
+<script src="/resources/js/part_main/mainIn.js"></script>
+<script src="/resources/js/part_board/b_write.js"></script>
 
 <article>
 	<div align="center">
