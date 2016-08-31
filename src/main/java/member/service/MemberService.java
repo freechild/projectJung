@@ -46,12 +46,15 @@ public class MemberService {
 		return dao.idCheck(userID);
 	}
 	
+	
 	public void update(MemberVO vo){
 		dao.update(vo);
 	}
 	
+	
+	
 	public String loginId(String userId,String userPw){
-		String result =null;
+		String result ="true";
 		
 		try {
 			MemberVO vo = dao.selectById(userId);

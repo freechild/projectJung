@@ -31,12 +31,12 @@
 			update
 				member
 			set
-				userPw=#{userPw},
-				zipcode=#{zipcode},
-				address1=#{address1},
+				userPw=#{userPw}
+				zipcode=#{zipcode}
+				address1=#{address1}
 				address2=#{address2}
 			where
-				idx=#{idx}
+				userId=#{userId}
 		]]>
 	</update>
 	

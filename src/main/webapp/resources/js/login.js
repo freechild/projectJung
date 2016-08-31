@@ -1,5 +1,3 @@
-
-
 function execDaumPostcode(){
     //load함수를 이용하여 core스크립트의 로딩이 완료된 후, 우편번호 서비스를 실행합니다.
     daum.postcode.load(function(){
@@ -71,12 +69,12 @@ $(document).ready(function() {
 											},
 											success:function(data){
 												if(data!="true"){
-													$("#idTest").text("아이디 중복이염");
+													$("#idTest").text("아이디 중복입니다");
 													$("#userIdCheck").val("false");
 													
 												}
 												else{
-													$("#idTest").text("사용 가능여");
+													$("#idTest").text("사용 가능 합니다");
 													$("#userIdCheck").val("true");
 												}
 											}
@@ -104,9 +102,8 @@ $(document).ready(function() {
 			});
 })
 	
-	function test(){	
+	function loginDo(){	
 		 $.ajax({
-			
 			url : 'login.do',
 			data :{
 				"userId" : $('#userId').val(),
@@ -116,8 +113,11 @@ $(document).ready(function() {
 			if(data=="true"){
 				var url = $('#userId').val();
 				$(location).attr('href',url+"/main");
-			}
-			else
+			}else if(data=="e"){
+				var url = $('#userId').val();
+				$(location).attr('href',url+"/main");
+				alert('현재 접속중입니다. 강제 접속 종료후 접속합니다');
+			}else
 				alert(data);
 		}) 
 	}
@@ -132,7 +132,6 @@ $(document).ready(function() {
 			document.rform.ruserPassword.focus();
 			return false;
 		}
-
 		if(userIdCheck == 'false'){
 			alert("아이디 중복입니다.");
 			document.rform.userId1.focus();

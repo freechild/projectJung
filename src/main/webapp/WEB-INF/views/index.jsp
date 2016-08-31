@@ -9,21 +9,20 @@
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <meta http-equiv="Content-Style-Type" content="text/css">
 
+<!-- 접속자 수, 회원 수정-->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/resources/css/form.css" />
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 <link rel="stylesheet" type="text/css" href="/resources/css/main.css" />
-<link rel="stylesheet" type="text/css" href="/resources/css/login.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/form.css" />
 <script src="/resources/js/front.js"></script>
 <script src="/resources/js/updateUser.js"></script>
-
-</head>
+<script src="/resources/js/update.js"></script>
+</head> 
 <body>
-	<input type="text" value="${sessionScope.email }" id="scope">
+	<input type="text" value="${sessionScope.userId }" id="scope">
 	<input type="text" value="${sessionScope.m_idx }" id="scope_idx">
-
 	<div class="joinForm" id="stylized"></div>
 	<div id="overlay"></div>
-
 	<div class="main-container">
 		<!-- HEADER -->
 		<header class="block">
@@ -35,18 +34,20 @@
 				<li><a class="header-menu-tab" href="#3"><span
 						class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
 					<a class="header-menu-number" href="#4">5</a></li>
-				<li><a class="header-menu-tab" href="#5"><span
-						class="icon fontawesome-star-empty scnd-font-color"></span>Favorites</a>
+				<li><a class="header-menu-tab" href="Gallery"><span
+						class="icon fontawesome-star-empty scnd-font-color"></span>Gallery</a>
 				</li>
+				<li>&nbsp&nbsp현재 접속자 수 : <input type="text" value="${usersMap}" id="userAdd" size="2px"></li>
+				
 			</ul>
 			<div class="profile-menu">
 				<div class="dropdown">
 					<a href="#">Me</a>
 					<div> 
 						<ul>
-							<li><a href="#">Logout</a></li>
+							<li><a href="logout.do">Logout</a></li>
 							<li><a href="javascript:showPopup('updateP')" id="updateP">update</a></li>
-							<li><a href="#">friends</a></li>
+							<li><a href="friends">friends</a></li>
 						</ul>
 					</div>
 				</div>
@@ -75,10 +76,6 @@
 					</a></li>
 				</ul>
 			</div>
-
-
-
-
 
 
 			<!-- RIGHT-CONTAINER -->

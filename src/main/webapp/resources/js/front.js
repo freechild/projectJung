@@ -7,6 +7,7 @@ jQuery.fn.center = function () {
 }
 
 function pop_hide(){
+	$('.joinForm').empty();
 	$('.joinForm').hide();
 	$('#overlay').hide();
 }
@@ -20,6 +21,8 @@ function showPopup(obj){
 		loginForm("Welcome Passenger");
 	else if(obj =='updateP')
 		updateForm();
+	else if(obj =='friendsP')
+		friendsForm();
 	else 
 		$('.joinForm').html("<h1>Login</h1>");
 	
@@ -107,4 +110,6 @@ function Login(){
 	})
 }
 
-
+function test(){
+	alert("접속을 종료 합니다.");
+}

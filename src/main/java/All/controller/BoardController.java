@@ -29,6 +29,7 @@ import board.service.CommentService;
 import board.service.PagingProcess;
 import board.service.PasswordCheckLogic;
 import member.service.MemberService;
+import member.service.MultiLoginPreventorListener;
 
 
 @Controller
@@ -43,6 +44,11 @@ public class BoardController {
 		private CommentService commentService;
 		@Autowired
 		private PasswordCheckLogic passwordCheckLogic;
+		@Autowired
+		MultiLoginPreventorListener preventorListener = MultiLoginPreventorListener.getInstance();
+		
+		
+		
 		
 		public BoardService getBoardService() {
 			return boardService;
@@ -75,7 +81,6 @@ public class BoardController {
 		@RequestMapping(value = "{email}/board", method = RequestMethod.GET)
 		public String board(@PathVariable("email") String email,Model model,HttpServletRequest request) {
 			
-			
 			HashMap<String, Integer> map =pagingProcess.pagingProcess(request);
 			
 			
@@ -92,6 +97,7 @@ public class BoardController {
 			model.addAttribute("s", pageSize);
 			model.addAttribute("b", blockSize);
 			model.addAttribute("cid", categoryid);
+			model.addAttribute("usersMap", preventorListener.getTotalActiveSession());
 			
 			PagingList<TotalVO> board =
 			boardService.selectList(currentPage, pageSize, blockSize, categoryid);

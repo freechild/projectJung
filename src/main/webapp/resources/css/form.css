@@ -1,4 +1,3 @@
-<style>
 
 .joinForm p, h1, form, button{border:0; margin:0; padding:0;}
 .spacer{clear:both; height:1px;}
@@ -96,6 +95,12 @@ font-family:tahoma;
 	float: right;
 }
 
-
-
-</style>
+#divView {
+	position:absolute;
+	display:none;
+	background-color:#ffffff;
+	border:solid 2px #d0d0d0;
+	width:100px;
+	height:100px;
+	padding:10px;
+}

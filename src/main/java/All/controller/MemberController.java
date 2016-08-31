@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +30,7 @@ import member.email.Email;
 import member.email.EmailSender;
 import member.service.Aria;
 import member.service.MemberService;
+import member.service.MultiLoginPreventorListener;
 
 /**
  * Handles requests for the application home page.
@@ -45,17 +47,26 @@ public class MemberController {
 	@Autowired
 	private Email email;
 	
+	
 	@Autowired
 	private MemberService service;
 	
+	@Autowired
+	MultiLoginPreventorListener preventorListener = MultiLoginPreventorListener.getInstance();
+	
+
 	// 로그인
 	@RequestMapping(value = "login.do")
 	@ResponseBody
-	public String login(HttpSession session, MemberVO memberVO, HttpServletRequest request){
-		
+	public String login(Model model, HttpSession session, MemberVO memberVO, HttpServletRequest request){
 		String result = service.loginId(memberVO.getUserId(), memberVO.getUserPw());
-		if(result == "true")
-			session.setAttribute("userId",memberVO.getUserId());
+
+		if(result == "true"){
+			if(preventorListener.findByLoginId(memberVO.getUserId())){
+				result = "e";
+			}
+			preventorListener.addUser(memberVO.getUserId(), session);
+		}
 		return result; 
 	} 
 	// 로그아웃
@@ -71,11 +82,7 @@ public class MemberController {
 	// 회원가입
 	@RequestMapping(value = "/registerOk.do", method = RequestMethod.POST)
 	public String register(MemberVO memberVO, HttpServletRequest request){
-		System.out.println(memberVO);
-		
 		String pass = aria.Encrypt(memberVO.getUserPw());
-		System.out.println(pass);
-		
 		memberVO.setUserPw(pass);
 		service.insert(memberVO);
 		return "login/login";
@@ -89,7 +96,6 @@ public class MemberController {
 	    String e_mail = memberVO.getEmail();
 	    String pw = service.getPw(e_mail);
 	    String id = memberVO.getUserId();
-	    
 	    String pass = aria.Decrypt(pw);
 	    
 	    System.out.println(id);
@@ -117,12 +123,12 @@ public class MemberController {
 	
 	// 회원정보 수정
 	@RequestMapping("{userId}/updateUser.do")
-	public String update(MemberVO memberVO, HttpServletRequest request){
+	public void update(MemberVO memberVO, HttpServletRequest request){
 		String pass = aria.Encrypt(memberVO.getUserPw());
 		memberVO.setUserPw(pass);
 		
+		System.out.println(memberVO);
 		service.update(memberVO);
-		return "login/login";
 	}
 	
 	//회원정보 수정
@@ -145,4 +151,5 @@ public class MemberController {
 			flag = "true";
 		return flag;
 	}
+
 }
