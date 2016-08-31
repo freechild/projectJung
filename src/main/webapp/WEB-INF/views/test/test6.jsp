@@ -1,28 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!doctype html>
-<html lang="kr">
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>jQuery UI Menu - Default functionality</title>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<title>New Document</title>
+<script>
+	function doLayerPopup(v) {
+		var layerPopupFull = document.getElementById("layerPopupFull");
+		var layerPopup = document.getElementById("layerPopup");
+		if (v == "show") {
+			layerPopupFull.style.display = "";
+			layerPopup.style.display = "";
+		} else {
+			layerPopupFull.style.display = "none";
+			layerPopup.style.display = "none";
+		}
+	}
+</script>
 </head>
 
 <body>
-<a href="javascript:test()">아이디</a>
-<div id="moreMenu2">
-	<a href="#">친구삭제</a><br>
-	<a href="#">대화하기</a><br>
-	<a href="#">메시지보내기</a><br>
-</div>
-<script type="text/javascript">
 
-	function test(){
-        $('#moreMenu2').toggle(); // #moreMenu2를 알아서 토.글!
-	}
-
-
-
-</script>
+	<div id="layerPopupFull" style="position: absolute;"></div>
+	<div id="layerPopup" style="position: absolute; z-index: 10; top: 50px; display: none;">
+		<button type="button" onclick="doLayerPopup('hide')">X</button>
+		dd
+	</div>
+	<a href = "javascript:doLayerPopup('show')">dd</a>
 </body>
 </html>

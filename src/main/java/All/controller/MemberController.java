@@ -82,11 +82,7 @@ public class MemberController {
 	// 회원가입
 	@RequestMapping(value = "/registerOk.do", method = RequestMethod.POST)
 	public String register(MemberVO memberVO, HttpServletRequest request){
-		System.out.println(memberVO);
-		
 		String pass = aria.Encrypt(memberVO.getUserPw());
-		System.out.println(pass);
-		
 		memberVO.setUserPw(pass);
 		service.insert(memberVO);
 		return "login/login";
@@ -157,6 +153,9 @@ public class MemberController {
 	}
 	
 	// 친구목록
-	
-	
+	@RequestMapping("{userId}/friends")
+	public String friends(){
+		
+		return "friends";
+	}
 }

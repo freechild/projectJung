@@ -17,7 +17,6 @@
 <script src="/resources/js/front.js"></script>
 <script src="/resources/js/updateUser.js"></script>
 <script src="/resources/js/update.js"></script>
-<script src="/resources/js/friends.js"></script>
 </head> 
 <body>
 	<input type="text" value="${sessionScope.userId }" id="scope">
@@ -35,8 +34,8 @@
 				<li><a class="header-menu-tab" href="#3"><span
 						class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
 					<a class="header-menu-number" href="#4">5</a></li>
-				<li><a class="header-menu-tab" href="#5"><span
-						class="icon fontawesome-star-empty scnd-font-color"></span>Favorites</a>
+				<li><a class="header-menu-tab" href="Gallery"><span
+						class="icon fontawesome-star-empty scnd-font-color"></span>Gallery</a>
 				</li>
 				<li>&nbsp&nbsp현재 접속자 수 : <input type="text" value="${usersMap}" id="userAdd" size="2px"></li>
 				
@@ -46,9 +45,9 @@
 					<a href="#">Me</a>
 					<div> 
 						<ul>
-							<li><a href="/logout.do">Logout</a></li>
+							<li><a href="javascript:test()">Logout</a></li>
 							<li><a href="javascript:showPopup('updateP')" id="updateP">update</a></li>
-							<li><a href="javascript:showPopup('friendsP')" id="friendsP">friends</a></li>
+							<li><a href="friends">friends</a></li>
 						</ul>
 					</div>
 				</div>

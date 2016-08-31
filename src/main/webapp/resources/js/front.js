@@ -110,4 +110,6 @@ function Login(){
 	})
 }
 
-
+function test(){
+	alert("접속을 종료 합니다.");
+}
