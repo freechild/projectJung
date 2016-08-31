@@ -45,7 +45,7 @@
 					<a href="#">Me</a>
 					<div> 
 						<ul>
-							<li><a href="javascript:test()">Logout</a></li>
+							<li><a href="logout.do">Logout</a></li>
 							<li><a href="javascript:showPopup('updateP')" id="updateP">update</a></li>
 							<li><a href="friends">friends</a></li>
 						</ul>

@@ -151,11 +151,5 @@ public class MemberController {
 			flag = "true";
 		return flag;
 	}
-	
-	// 친구목록
-	@RequestMapping("{userId}/friends")
-	public String friends(){
-		
-		return "friends";
-	}
+
 }
