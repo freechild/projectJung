@@ -80,7 +80,6 @@ public class MemberController {
 	@RequestMapping(value = "/logout.do", method = {RequestMethod.POST,RequestMethod.GET})
 	public String logout(HttpSession session){
 
-		System.out.println(session);
 		session.invalidate();
 		System.out.println(session);
 		return "login/login";

@@ -37,7 +37,7 @@
 						class="icon fontawesome-user scnd-font-color"></span>Board</a></li>
 				<li><a class="header-menu-tab" href="#3"><span
 						class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
-					<a class="header-menu-number" href="#4">5</a></li>
+					<a class="header-menu-number" href="#4"></a></li>
 				<li><a class="header-menu-tab" href="Gallery"><span
 						class="icon fontawesome-star-empty scnd-font-color"></span>Gallery</a>
 				</li>
@@ -49,7 +49,7 @@
 					<a href="#">Me</a>
 					<div> 
 						<ul>
-							<li><a href="logout.do">Logout</a></li>
+							<li><a href="/logout.do">Logout</a></li>
 							<li><a href="javascript:showPopup('updateP')" id="updateP">update</a></li>
 							<li><a href="friends">friends</a></li>
 						</ul>
@@ -65,13 +65,13 @@
 				<ul class="menu-box-menu">
 					<li><a class="menu-box-tab" href="message">
 					<span class="icon fontawesome-envelope scnd-font-color"></span>Messages
-							<div class="menu-box-number">24</div></a></li>
+							<div class="menu-box-number"></div></a></li>
 					<li><a class="menu-box-tab" href="invites"><span
 							class="icon entypo-paper-plane scnd-font-color"></span>Invites
-							<div class="menu-box-number">3</div></a></li>
+							<div class="menu-box-number"></div></a></li>
 					<li><a class="menu-box-tab" href="#10"><span
 							class="icon entypo-calendar scnd-font-color"></span>Events
-							<div class="menu-box-number">5</div></a></li>
+							<div class="menu-box-number"></div></a></li>
 					<li><a class="menu-box-tab" href="#12"><span
 							class="icon entypo-cog scnd-font-color"></span>Account Settings</a></li>
 					<li><a class="menu-box-tab" href="#13">

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
+import All.vo.MessageVO;
 import All.vo.TotalVO;
 import member.service.MemberService;
 import member.service.MessageService;
@@ -49,6 +51,7 @@ public class MessageController {
 		
 		return "friendList/message";
 	}
+	
 	@RequestMapping(value="/msgDetail",produces ="text/html; charset=UTF-8")
 	@ResponseBody
 	public String msgDetail(@RequestParam("idx")int idx){
@@ -57,6 +60,7 @@ public class MessageController {
 		String result = gson.toJson(vo);
 		return result;
 	}
+	
 	@RequestMapping(value="/status_friend",produces ="text/html; charset=UTF-8")
 	@ResponseBody
 	public void status_friend(@RequestParam("status")String status,@RequestParam("idx")int idx){
@@ -72,4 +76,11 @@ public class MessageController {
 			messageService.delete(idx);
 		}
 	}
+	@RequestMapping(value="/sendMsg",produces ="text/html; charset=UTF-8")
+	@ResponseBody
+	public void sendMsg(@ModelAttribute MessageVO vo){
+		messageService.sendMsg(vo);
+		
+	}
+	
 }

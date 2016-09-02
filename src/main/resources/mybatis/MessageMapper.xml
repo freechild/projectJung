@@ -31,21 +31,12 @@
 			m1.idx = msg.recipient_idx
 			and m2.idx = msg.sender_idx
 			AND( msg.recipient_idx = #{both_idx}
-				OR msg.sender_idx = #{both_idx}
+				OR msg.sender_idx != #{both_idx}
 			)
 		</where>
 			order by msg.idx desc
 	</select>
-	<select id="selectListOption" parameterType="int" resultType="TotalVO">
-		select m1.userName recipient,m2.userName sender,msg.*
-		from message msg,member m1,member m2
-		<where>
-			m1.idx = msg.recipient_idx
-			and m2.idx = msg.sender_idx
-			AND( msg.recipient_idx = #{both_idx})
-		</where>
-			order by msg.idx desc
-	</select>
+	
 	
 	<select id="selectByIdx" parameterType="int" resultType="TotalVO">
 		select * from message where idx =#{idx} order by idx desc
