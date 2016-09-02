@@ -40,7 +40,7 @@ public class PagingProcess {
 		}
 
 		try {
-			categoryid = Integer.parseInt(request.getParameter("cid"));
+			categoryid = Integer.parseInt(request.getParameter("categoryid"));
 		} catch (Exception e) {
 			categoryid = 0;
 		}

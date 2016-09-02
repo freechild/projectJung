@@ -1,4 +1,5 @@
 package All.controller;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -88,12 +89,11 @@ public class BoardController {
 			int blockSize = map.get("blockSize");
 			//b
 			int categoryid = map.get("categoryid");
-			//cid
 			
 			model.addAttribute("p", currentPage);
 			model.addAttribute("s", pageSize);
 			model.addAttribute("b", blockSize);
-			model.addAttribute("cid", categoryid);
+			model.addAttribute("categoryid", categoryid);
 			
 			PagingList<TotalVO> board =
 			boardService.selectList(currentPage, pageSize, blockSize, categoryid);
@@ -108,6 +108,48 @@ public class BoardController {
 			return "board/board";
 		
 	}
+		
+		@RequestMapping(value = "/board", method = RequestMethod.GET,produces ="text/html; charset=UTF-8")
+		@ResponseBody
+		public String board2(HttpServletRequest request) {
+			
+			
+			HashMap<String, Integer> map =pagingProcess.pagingProcess(request);
+			
+			
+			int currentPage = map.get("currentPage");
+			//p
+			int pageSize = map.get("pageSize");
+			//s
+			int blockSize = map.get("blockSize");
+			//b
+			int categoryid = map.get("categoryid");
+			
+			System.out.println(currentPage);
+			PagingList<TotalVO> board =
+			boardService.selectList(currentPage, pageSize, blockSize, categoryid);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			List<CategoryVO>categories = categoryService.getCategories();
+			
+			Gson gson = new Gson();
+			String result = gson.toJson(board);
+			
+			System.out.println(result);
+			return result;
+		
+	}
+		@RequestMapping(value = "/category", method = RequestMethod.GET,produces ="text/html; charset=UTF-8")
+		@ResponseBody
+		public String category(HttpServletRequest request) {
+			
+			List<CategoryVO>categories = categoryService.getCategories();
+			
+			Gson gson = new Gson();
+			String result = gson.toJson(categories);
+			System.out.println(result);
+			return result;
+			
+		}
 	
 		
 		@RequestMapping(value ="{email}/b_write")
@@ -122,11 +164,11 @@ public class BoardController {
 			int blockSize = map.get("blockSize");
 			//b
 			int categoryid = map.get("categoryid");
-			//cid
+			
 			model.addAttribute("p", currentPage);
 			model.addAttribute("s", pageSize);
 			model.addAttribute("b", blockSize);
-			model.addAttribute("cid", categoryid);
+			model.addAttribute("categoryid", categoryid);
 			
 			List<CategoryVO>categories =
 					categoryService.getCategories();
@@ -170,11 +212,10 @@ public class BoardController {
 			int blockSize = map.get("blockSize");
 			//b
 			int categoryid = map.get("categoryid");
-			//cid
 			model.addAttribute("p", currentPage);
 			model.addAttribute("s", pageSize);
 			model.addAttribute("b", blockSize);
-			model.addAttribute("cid", categoryid);
+			model.addAttribute("categoryid", categoryid);
 			
 			List<TotalVO> Clist = commentService.selectList(idx);
 			model.addAttribute("clist", Clist);
@@ -244,13 +285,11 @@ public class BoardController {
 			int blockSize = map.get("blockSize");
 			//b
 			int categoryid = map.get("categoryid");
-			//cid
-			
 			
 			model.addAttribute("p", currentPage);
 			model.addAttribute("s", pageSize);
 			model.addAttribute("b", blockSize);
-			model.addAttribute("cid", categoryid);
+			model.addAttribute("categoryid", categoryid);
 			
 			String search= null;
 			try{
@@ -292,7 +331,7 @@ public class BoardController {
 			model.addAttribute("p", currentPage);
 			model.addAttribute("s", pageSize);
 			model.addAttribute("b", blockSize);
-			model.addAttribute("cid", categoryid);
+			model.addAttribute("categoryid", categoryid);
 			
 			PagingList<TotalVO> board =
 			boardService.selectList(currentPage, pageSize, blockSize, categoryid);

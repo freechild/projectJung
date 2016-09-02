@@ -76,6 +76,7 @@ public class TotalVO {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
+	
 	public Date getRegdate() {
 		return regdate;
 	}
