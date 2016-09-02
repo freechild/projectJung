@@ -4,6 +4,9 @@
 <html lang="kr">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
 <link href="<c:url value='resources/css/login.css' />" rel="stylesheet">
 <title>로그인</title>
 </head>

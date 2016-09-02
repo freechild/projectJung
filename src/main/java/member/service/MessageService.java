@@ -1,6 +1,5 @@
 package member.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +39,14 @@ public class MessageService {
 		}
 		return bool;
 	}
+	public void sendMsg(MessageVO vo){
+		try {
+			messageDAO.insert(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public boolean checkFriend(TotalVO vo,int sender_idx){
 		boolean bool = true;
 		try {

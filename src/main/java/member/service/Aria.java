@@ -338,8 +338,7 @@ public class Aria {
 		o[oIndex + 13] =  (i[iIndex + 3] ^ i[iIndex + 6] ^ i[iIndex + 8] ^ T);
 	}
 
-	// Right-rotate 128 bit source string s by n bits and XOR it to target
-	// string t
+
 	private  void RotXOR(int[] s, int n, int[] t, int index) {
 		int i, q;
 
@@ -461,8 +460,7 @@ public class Aria {
 		return R;
 	}
 
-	// Decryption round key generation rountine
-	// w0 : maskter key, d : decryption round keys
+
 	private  int DecKeySetup(int[] w0, int[] d, int keyBits) {
 		int i, j, R;
 		int[] t = new int[16];

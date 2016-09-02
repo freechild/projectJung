@@ -5,7 +5,7 @@ import java.util.List;
 
 
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,13 +23,14 @@ import com.google.gson.Gson;
 
 import All.vo.BoardVO;
 import All.vo.CategoryVO;
-
+import All.vo.MemberVO;
 import All.vo.PagingList;
 import All.vo.TotalVO;
 import board.service.BoardService;
 import board.service.CategoryService;
 import board.service.CommentService;
 import board.service.PagingProcess;
+import member.service.MultiLoginPreventorListener;
 import board.service.ClientCheckLogic;
 
 
@@ -46,6 +47,9 @@ public class BoardController {
 		private CommentService commentService;
 		@Autowired
 		private ClientCheckLogic clientCheckLogic;
+		
+		@Autowired
+		MultiLoginPreventorListener preventorListener = MultiLoginPreventorListener.getInstance();
 		
 		public BoardService getBoardService() {
 			return boardService;
@@ -76,7 +80,7 @@ public class BoardController {
 
 	
 		@RequestMapping(value = "{email}/board", method = RequestMethod.GET)
-		public String board(@PathVariable("email") String email,Model model,HttpServletRequest request) {
+		public String board(@PathVariable("email") String email,Model model,HttpServletRequest request,HttpSession session) {
 			
 			
 			HashMap<String, Integer> map =pagingProcess.pagingProcess(request);
